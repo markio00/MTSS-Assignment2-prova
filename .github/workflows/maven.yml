@@ -28,5 +28,3 @@ jobs:
     
     - name: Coveralls
       uses: codecov/codecov-action@v3
-      with:
-        token: '285da295-603b-41a2-8a11-4083e921b92a'
