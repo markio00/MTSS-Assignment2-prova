@@ -7,4 +7,8 @@ package it.unipd.mtss.business.exception;
 
 public class BillException extends Throwable{
     
+    public BillException(String error) {
+        super(error);
+    }
+
 }
