@@ -6,6 +6,7 @@ import it.unipd.mtss.model.ItemType;
 
 import java.util.Vector;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -60,5 +61,8 @@ public class ConcreteBillTest {
 
         // Assert
         assertEquals(discount, 100, 0);
+
+        discount = bill.getDiscount5Processors(new Vector<EItem>());
+        assertEquals(0, discount, 0);
     }
 }
