@@ -19,7 +19,8 @@ public class ConcreteBill implements Bill{
 
         return total - 
         getDiscount5Processors(itemsOrdered) - 
-        getDiscount10Mouse(itemsOrdered)-
+        getDiscount10Mouse(itemsOrdered) -
+        getDiscountSameMouseKeyboards(itemsOrdered) -
         get100Discount(total);
     }
 
@@ -78,4 +79,26 @@ public class ConcreteBill implements Bill{
         return 0;
     }
 
+    public double getDiscountSameMouseKeyboards(List<EItem> itemsOrdered) {
+        
+        int matchFound = 0;
+        double minPrice = Double.MAX_VALUE;
+
+        for(EItem item : itemsOrdered){
+            if(item.getItemType() == ItemType.Mouse){
+                minPrice = Math.min(minPrice, item.getPrice());
+                ++matchFound;
+            }
+            if(item.getItemType() == ItemType.Keyboard){
+                minPrice = Math.min(minPrice, item.getPrice());
+                --matchFound;
+            }
+        }
+
+        if(matchFound == 0 && !itemsOrdered.isEmpty()){
+            return minPrice/2;
+        }
+        
+        return 0;
+    }
 }
