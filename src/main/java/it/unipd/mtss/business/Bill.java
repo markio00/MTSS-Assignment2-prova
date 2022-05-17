@@ -13,6 +13,7 @@ import it.unipd.mtss.model.User;
 
 public interface Bill {
     
-    double getOrderPrice(List<EItem> itemsOrdered, User user) throws BillException;
+    double getOrderPrice(List<EItem> itemsOrdered, User user)
+    throws BillException;
 
 }
