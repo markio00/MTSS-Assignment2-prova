@@ -15,7 +15,8 @@ public class ConcreteBill implements Bill{
     
     public double getOrderPrice(List<EItem> itemsOrdered, User user) {
 
-        return getTotalPrice(itemsOrdered) - getDiscount5Processors(itemsOrdered);
+        return getTotalPrice(itemsOrdered) - 
+        getDiscount5Processors(itemsOrdered);
     }
 
     public double getTotalPrice(List<EItem> itemsOrdered) {
