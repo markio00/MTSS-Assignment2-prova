@@ -43,6 +43,17 @@ public class ConcreteBillTest {
         this.list.add(new EItem(ItemType.Mouse, "crappy", 10));
         this.list.add(new EItem(ItemType.Mouse, "crappy", 10));
         this.list.add(new EItem(ItemType.Mouse, "crappy", 10));
+        this.list.add(new EItem(ItemType.Keyboard, "Ozone Stike Pro", 100));
+        this.list.add(new EItem(ItemType.Keyboard, "crappy", 20));
+        this.list.add(new EItem(ItemType.Keyboard, "crappy", 20));
+        this.list.add(new EItem(ItemType.Keyboard, "crappy", 20));
+        this.list.add(new EItem(ItemType.Keyboard, "crappy", 20));
+        this.list.add(new EItem(ItemType.Keyboard, "crappy", 20));
+        this.list.add(new EItem(ItemType.Keyboard, "crappy", 20));
+        this.list.add(new EItem(ItemType.Keyboard, "crappy", 20));
+        this.list.add(new EItem(ItemType.Keyboard, "crappy", 20));
+        this.list.add(new EItem(ItemType.Keyboard, "crappy", 20));
+        this.list.add(new EItem(ItemType.Keyboard, "super crappy", 5));
     }
 
     @Test
@@ -51,9 +62,9 @@ public class ConcreteBillTest {
         double price = bill.getOrderPrice(list, user);
 
         // Assert
-        assertEquals(price, 1335.99, 0);
+        assertEquals(price, 1618.49, 0);
 
-        price = bill.getDiscount5Processors(new Vector<EItem>());
+        price = bill.getOrderPrice(new Vector<EItem>(), user);
         assertEquals(0, price, 0);
     }
 
@@ -63,9 +74,9 @@ public class ConcreteBillTest {
         double tot = bill.getTotalPrice(list);
 
         // Assert
-        assertEquals(tot, 1445.99, 0);
+        assertEquals(tot, 1730.99, 0);
 
-        tot = bill.getDiscount5Processors(new Vector<EItem>());
+        tot = bill.getTotalPrice(new Vector<EItem>());
         assertEquals(0, tot, 0);
     }
 
@@ -90,6 +101,17 @@ public class ConcreteBillTest {
         assertEquals(10, discount,  0);
 
         discount = bill.getDiscount10Mouse(new Vector<EItem>());
+        assertEquals(0, discount, 0);
+    }
+    @Test
+    public void testGetDiscountSameMouseKeyboards() {
+        // Act
+        double discount = bill.getDiscountSameMouseKeyboards(list);
+
+        // Assert
+        assertEquals(2.5, discount,  0);
+
+        discount = bill.getDiscountSameMouseKeyboards(new Vector<EItem>());
         assertEquals(0, discount, 0);
     }
 }
