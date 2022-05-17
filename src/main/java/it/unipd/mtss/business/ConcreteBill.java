@@ -16,7 +16,8 @@ public class ConcreteBill implements Bill{
     public double getOrderPrice(List<EItem> itemsOrdered, User user) {
 
         return getTotalPrice(itemsOrdered) - 
-        getDiscount5Processors(itemsOrdered);
+        getDiscount5Processors(itemsOrdered) - 
+        getDiscount10Mouse(itemsOrdered);
     }
 
     public double getTotalPrice(List<EItem> itemsOrdered) {
@@ -43,6 +44,24 @@ public class ConcreteBill implements Bill{
 
         if(processorsFound >= 5){
             return minPrice/2;
+        }
+        
+        return 0;
+    }
+
+    public double getDiscount10Mouse(List<EItem> itemsOrdered) {
+        int mouseFound = 0;
+        double minPrice = Double.MAX_VALUE;
+
+        for(EItem item : itemsOrdered){
+            if(item.getItemType() == ItemType.Mouse){
+                minPrice = Math.min(minPrice, item.getPrice());
+                ++mouseFound;
+            }
+        }
+
+        if(mouseFound > 10){
+            return minPrice;
         }
         
         return 0;
