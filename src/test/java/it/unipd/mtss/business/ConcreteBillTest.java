@@ -62,7 +62,7 @@ public class ConcreteBillTest {
         double price = bill.getOrderPrice(list, user);
 
         // Assert
-        assertEquals(price, 1191.391, 0);
+        assertEquals(price, 1445.391, 0);
 
         price = bill.getOrderPrice(new Vector<EItem>(), user);
         assertEquals(0, price, 0);
@@ -111,7 +111,7 @@ public class ConcreteBillTest {
         double discount = bill.get100Discount( tot);
 
         // Assert
-        assertEquals(144.599, discount, 0);
+        assertEquals(173.099, discount, 0);
 
         assertEquals(0, bill.get100Discount(0), 0);
     }
