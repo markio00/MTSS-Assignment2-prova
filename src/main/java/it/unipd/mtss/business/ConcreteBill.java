@@ -15,9 +15,12 @@ public class ConcreteBill implements Bill{
     
     public double getOrderPrice(List<EItem> itemsOrdered, User user) {
 
-        return getTotalPrice(itemsOrdered) - 
+        double total = getTotalPrice(itemsOrdered);
+
+        return total - 
         getDiscount5Processors(itemsOrdered) - 
-        getDiscount10Mouse(itemsOrdered);
+        getDiscount10Mouse(itemsOrdered)-
+        get100Discount(total);
     }
 
     public double getTotalPrice(List<EItem> itemsOrdered) {
@@ -64,6 +67,14 @@ public class ConcreteBill implements Bill{
             return minPrice;
         }
         
+        return 0;
+    }
+
+    public double get100Discount(double totalPrice)  {
+        if(totalPrice > 1000) {
+            return totalPrice/10;
+        }
+
         return 0;
     }
 
