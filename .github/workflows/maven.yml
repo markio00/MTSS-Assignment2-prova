@@ -26,5 +26,5 @@ jobs:
     - name: Test(JaCoCo)
       run: mvn test jacoco:report
     
-    - name: Coveralls
+    - name: Codecov push
       uses: codecov/codecov-action@v3
