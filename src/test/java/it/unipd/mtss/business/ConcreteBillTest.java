@@ -113,5 +113,10 @@ public class ConcreteBillTest {
 
         discount = bill.getDiscountSameMouseKeyboards(new Vector<EItem>());
         assertEquals(0, discount, 0);
+
+        Vector<EItem> v = new Vector<>(list);
+        v.add(new EItem(ItemType.Keyboard, "crappy", 20));
+        discount = bill.getDiscountSameMouseKeyboards(v);
+        assertEquals(0, discount, 0);
     }
 }
