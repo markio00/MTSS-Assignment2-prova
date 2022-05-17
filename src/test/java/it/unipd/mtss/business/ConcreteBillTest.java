@@ -27,6 +27,11 @@ public class ConcreteBillTest {
 
         this.list = new Vector<EItem>();
         this.list.add(new EItem(ItemType.Processor, "R7 5700X", 300.00));
+        this.list.add(new EItem(ItemType.Processor, "R5 5600X", 200.00));
+        this.list.add(new EItem(ItemType.Processor, "R7 5700X", 300.00));
+        this.list.add(new EItem(ItemType.Processor, "R5 5600X", 200.00));
+        this.list.add(new EItem(ItemType.Processor, "R7 5700X", 300.00));
+        
         this.list.add(new EItem(ItemType.Mouse, "G502", 45.99));
     }
 
@@ -36,6 +41,24 @@ public class ConcreteBillTest {
         double price = bill.getOrderPrice(list, user);
 
         // Assert
-        assertEquals(price, 345.99, 0);
+        assertEquals(price, 1245.99, 0);
+    }
+
+    @Test
+    public void testGetTotalPrice() {
+        // Act
+        double tot = bill.getTotalPrice(list);
+
+        // Assert
+        assertEquals(tot, 1345.99, 0);
+    }
+
+    @Test
+    public void testGetDiscount5Processors() {
+        // Act
+        double discount = bill.getDiscount5Processors(list);
+
+        // Assert
+        assertEquals(discount, 100, 0);
     }
 }
