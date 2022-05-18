@@ -107,8 +107,9 @@ public class ConcreteBill implements Bill{
     }
 
     public double getCommission2(double totalPrice) {
-        if(totalPrice < 10)
+        if(totalPrice < 10) {
             return 2.0;
+        }
 
         return 0;
     }
