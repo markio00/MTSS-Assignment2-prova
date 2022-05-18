@@ -1,6 +1,7 @@
 package it.unipd.mtss.business;
 
 import it.unipd.mtss.model.User;
+import it.unipd.mtss.business.exception.BillException;
 import it.unipd.mtss.model.EItem;
 import it.unipd.mtss.model.ItemType;
 
@@ -8,6 +9,7 @@ import java.util.Vector;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -54,18 +56,26 @@ public class ConcreteBillTest {
         this.list.add(new EItem(ItemType.Keyboard, "crappy", 20));
         this.list.add(new EItem(ItemType.Keyboard, "crappy", 20));
         this.list.add(new EItem(ItemType.Keyboard, "super crappy", 5));
+        
     }
 
     @Test
     public void testGetOrderPrice() {
-        // Act
-        double price = bill.getOrderPrice(list, user);
 
-        // Assert
-        assertEquals(price, 1445.391, 0);
+        try {
+            // Act
+            double price = bill.getOrderPrice(list, user);
 
-        price = bill.getOrderPrice(new Vector<EItem>(), user);
-        assertEquals(2, price, 0);
+            // Assert
+            assertEquals(price, 1445.391, 0);
+
+            price = bill.getOrderPrice(new Vector<EItem>(), user);
+            assertEquals(2, price, 0);
+        }catch (BillException e) {
+            e.printStackTrace();
+            fail("Carrello ciccione");
+        }
+
     }
 
     @Test
@@ -144,5 +154,31 @@ public class ConcreteBillTest {
         assertEquals(2, discountLT, 0);
         assertEquals(0, discountEQ, 0);
         assertEquals(0, discountGT, 0);
+    }
+
+    
+    public void max30Products(){
+        try {
+            bill.max30Products(list);
+        } catch (BillException e) {
+            assertEquals(e.getMessage(), "Mannaggia");
+        }
+        
+        try {
+            bill.max30Products(new Vector<EItem>());
+        } catch (BillException e) {
+            assertEquals(e.getMessage(), "Mannaggia");
+        }
+
+        Vector<EItem> test = new Vector<EItem>();
+        for (int i = 0; i < 40; ++i){
+            test.add(new EItem(ItemType.Processor, "test", 1));
+        }
+
+        try {
+            bill.max30Products(test);
+        } catch (BillException e) {
+            assertEquals(e.getMessage(), "Mannaggia");
+        }
     }
 }

@@ -6,6 +6,7 @@
 package it.unipd.mtss.business;
 
 import it.unipd.mtss.model.User;
+import it.unipd.mtss.business.exception.BillException;
 import it.unipd.mtss.model.EItem;
 import it.unipd.mtss.model.ItemType;
 
@@ -13,8 +14,10 @@ import java.util.List;
 
 public class ConcreteBill implements Bill{
     
-    public double getOrderPrice(List<EItem> itemsOrdered, User user) {
-
+    public double getOrderPrice(List<EItem> itemsOrdered, User user) 
+    throws BillException {
+        
+        max30Products(itemsOrdered);
         double total = getTotalPrice(itemsOrdered);
 
         return total - 
@@ -109,4 +112,14 @@ public class ConcreteBill implements Bill{
 
         return 0;
     }
+    public void max30Products(List<EItem> itemsOrdered) throws BillException{
+        // Act
+        int count = itemsOrdered.size();
+        // Assert
+        if (count > 30){
+            throw new BillException("Mannaggia");
+        }
+        
+    }
+    
 }
