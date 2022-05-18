@@ -156,8 +156,8 @@ public class ConcreteBillTest {
         assertEquals(0, discountGT, 0);
     }
 
-    
-    public void max30Products(){
+    @Test
+    public void testMax30Products(){
         try {
             bill.max30Products(list);
         } catch (BillException e) {
@@ -171,7 +171,7 @@ public class ConcreteBillTest {
         }
 
         Vector<EItem> test = new Vector<EItem>();
-        for (int i = 0; i < 40; ++i){
+        for (int i = 0; i < 50; ++i){
             test.add(new EItem(ItemType.Processor, "test", 1));
         }
 

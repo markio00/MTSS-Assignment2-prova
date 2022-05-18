@@ -117,6 +117,7 @@ public class ConcreteBill implements Bill{
         // Act
         int count = itemsOrdered.size();
         // Assert
+        
         if (count > 30){
             throw new BillException("Mannaggia");
         }
