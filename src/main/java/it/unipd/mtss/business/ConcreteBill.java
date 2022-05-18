@@ -10,14 +10,27 @@ import it.unipd.mtss.business.exception.BillException;
 import it.unipd.mtss.model.EItem;
 import it.unipd.mtss.model.ItemType;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Random;
+import java.util.Vector;
 
 public class ConcreteBill implements Bill{
     
-    public double getOrderPrice(List<EItem> itemsOrdered, User user) 
-    throws BillException {
+    static final int presents = 10;
+    static Vector<User> luckyUsers = new Vector<User>(10);
+
+    public double getOrderPrice(List<EItem> itemsOrdered, User user, 
+    LocalTime date) throws BillException {
         
         max30Products(itemsOrdered);
+
+        if(lottery(user, date)){
+            return 0;
+        }
+        
         double total = getTotalPrice(itemsOrdered);
 
         return total - 
@@ -26,6 +39,33 @@ public class ConcreteBill implements Bill{
         getDiscountSameMouseKeyboards(itemsOrdered) -
         get100Discount(total) +
         getCommission2(total);
+    }
+
+    public boolean lottery(User user, LocalTime currentTime) {
+
+        int time = Integer.parseInt(DateTimeFormatter.ofPattern("HHmm").
+        format(currentTime));
+        
+        if(time >= 1800 && time <= 1900){
+                
+            if(!luckyUsers.contains(user) && presents > luckyUsers.size() &&
+            user.getBirthDate().compareTo(LocalDate.now().minusYears(18)) > 0){
+
+                Random rand = new Random();
+                int randomino = rand.nextInt(10); //0-9
+                //10%
+                if(randomino == 0){
+                    luckyUsers.add(user);
+                    return true;
+                }
+            }
+        }   
+        else{
+            luckyUsers.clear();
+            return false;
+        }      
+        return false;
+        
     }
 
     public double getTotalPrice(List<EItem> itemsOrdered) {
@@ -117,11 +157,17 @@ public class ConcreteBill implements Bill{
         // Act
         int count = itemsOrdered.size();
         // Assert
-        
+
         if (count > 30){
             throw new BillException("Mannaggia");
         }
         
     }
     
+
+    public double getOrderPrice(List<EItem> itemsOrdered, User user) 
+    throws BillException {
+        return getOrderPrice(itemsOrdered, user, LocalTime.of(15, 00, 00));
+    }
+
 }

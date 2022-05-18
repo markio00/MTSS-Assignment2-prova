@@ -5,6 +5,9 @@
 
 package it.unipd.mtss;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Hello world!
  *
@@ -13,6 +16,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        String s = DateTimeFormatter.ofPattern("HHmm").format(LocalTime.now());
+        System.out.println(s);
     }
 }

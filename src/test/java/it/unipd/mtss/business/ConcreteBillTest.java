@@ -6,7 +6,8 @@ import it.unipd.mtss.model.EItem;
 import it.unipd.mtss.model.ItemType;
 
 import java.util.Vector;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -25,7 +26,7 @@ public class ConcreteBillTest {
         // Arrange
         this.bill = new ConcreteBill();
 
-        this.user = new User("user1", "Mario", "Rossi", new Date(0));
+        this.user = new User("user1", "Mario", "Rossi", LocalDate.of(2010,04,19));
 
         this.list = new Vector<EItem>();
         this.list.add(new EItem(ItemType.Processor, "R7 5700X", 300.00));
@@ -61,21 +62,26 @@ public class ConcreteBillTest {
 
     @Test
     public void testGetOrderPrice() {
-
+        double price = Double.MAX_VALUE;
         try {
             // Act
-            double price = bill.getOrderPrice(list, user);
+            price = bill.getOrderPrice(list, user);
 
             // Assert
             assertEquals(price, 1445.391, 0);
-
+            price = bill.getOrderPrice(list, user, LocalTime.of(23, 12, 00));
+            assertEquals(price, 1445.391, 0);
             price = bill.getOrderPrice(new Vector<EItem>(), user);
             assertEquals(2, price, 0);
+            price = Double.MAX_VALUE;
+            for(int i = 0; i < 100; ++i){
+                price = Math.min(price, bill.getOrderPrice(list, user, LocalTime.of(18, 12, 00)));
+            }
+            assertEquals(0, price, 0);
         }catch (BillException e) {
             e.printStackTrace();
             fail("Carrello ciccione");
-        }
-
+        }               
     }
 
     @Test
@@ -180,5 +186,45 @@ public class ConcreteBillTest {
         } catch (BillException e) {
             assertEquals(e.getMessage(), "Mannaggia");
         }
+    }
+    @Test
+    public void testLottery(){
+        boolean result = true;
+        for(int i = 0; i<100; ++i){
+            result = result && bill.lottery(user,LocalTime.of(17, 05, 00));
+        }
+        assertEquals(result, false);
+
+
+
+        result = true;
+        for(int i = 0; i<50; ++i){
+            result = result && bill.lottery(new User("robo", "name", "surrname", 
+                    LocalDate.of(1990, 01, 01)),LocalTime.of(17, 05, 00));
+        }
+        assertEquals(result, false);
+
+                result = true;
+        for(int i = 0; i<50; ++i){
+            result = result && bill.lottery(new User("robo", "name", "surrname", 
+                    LocalDate.of(1990, 01, 01)),LocalTime.of(18, 05, 00));
+        }
+        assertEquals(result, false);
+
+        result = false;
+        for(int i = 0; i<50; ++i){
+            result = result || bill.lottery(new User("robo", "name", "surrname", 
+                    LocalDate.of(2012, 01, 01)),LocalTime.of(18, 05, 00));
+        }
+        assertEquals(result, true);
+
+        result = false;
+        ConcreteBill.luckyUsers.clear();
+        for(int i = 0; i<10; ++i){
+            ConcreteBill.luckyUsers.add(user);
+        }
+        result = bill.lottery(new User("robo", "name", "surrname", 
+                LocalDate.of(1990, 01, 01)),LocalTime.of(18, 05, 00));
+        assertEquals(result, false);
     }
 }
