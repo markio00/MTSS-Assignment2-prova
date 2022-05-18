@@ -65,7 +65,7 @@ public class ConcreteBillTest {
         assertEquals(price, 1445.391, 0);
 
         price = bill.getOrderPrice(new Vector<EItem>(), user);
-        assertEquals(0, price, 0);
+        assertEquals(2, price, 0);
     }
 
     @Test
@@ -131,5 +131,18 @@ public class ConcreteBillTest {
         v.add(new EItem(ItemType.Keyboard, "crappy", 20));
         discount = bill.getDiscountSameMouseKeyboards(v);
         assertEquals(0, discount, 0);
+    }
+
+    @Test
+    public void testGetCommission2() {
+        // Act 
+        double discountLT = bill.getCommission2(9);
+        double discountEQ = bill.getCommission2(10);
+        double discountGT = bill.getCommission2(11);
+
+        // Assert
+        assertEquals(2, discountLT, 0);
+        assertEquals(0, discountEQ, 0);
+        assertEquals(0, discountGT, 0);
     }
 }

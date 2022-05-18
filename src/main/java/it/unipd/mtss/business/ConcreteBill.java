@@ -21,7 +21,8 @@ public class ConcreteBill implements Bill{
         getDiscount5Processors(itemsOrdered) - 
         getDiscount10Mouse(itemsOrdered) -
         getDiscountSameMouseKeyboards(itemsOrdered) -
-        get100Discount(total);
+        get100Discount(total) +
+        getCommission2(total);
     }
 
     public double getTotalPrice(List<EItem> itemsOrdered) {
@@ -99,6 +100,13 @@ public class ConcreteBill implements Bill{
             return minPrice/2;
         }
         
+        return 0;
+    }
+
+    public double getCommission2(double totalPrice) {
+        if(totalPrice < 10)
+            return 2.0;
+
         return 0;
     }
 }
