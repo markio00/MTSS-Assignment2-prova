@@ -272,14 +272,10 @@ public class ConcreteBillTest {
     public void testLottery() {
         try {
             this.bill = new ConcreteBill();
-            
-            // Set time of purchase out of range for random gifted order
             LocalTime time = LocalTime.of(18, 15, 0);
-            
             this.user = new User("user1", "Mario", "Rossi", LocalDate.of(2020, 04, 19));
             this.list = new Vector<EItem>();
-            double price = Double.MAX_VALUE;
-            
+            double price = Double.MAX_VALUE; 
             this.list.add(new EItem(ItemType.Mouse, "article1", 100.00));
             
             //TEST LOTTERIA 
