@@ -23,8 +23,8 @@ public class ConcreteBill implements Bill{
     static Vector<User> luckyUsers = new Vector<User>(10);
     
     public double getOrderPrice(final List<EItem> itemsOrdered, 
-        final User user, 
-        final LocalTime date) throws BillException {
+    final User user, 
+    final LocalTime date) throws BillException {
         
         max30Products(itemsOrdered);
         
@@ -33,7 +33,7 @@ public class ConcreteBill implements Bill{
         }
         
         double total = getTotalPrice(itemsOrdered);
-
+        
         return total - 
         getDiscount5Processors(itemsOrdered) - 
         getDiscount10Mouse(itemsOrdered) -

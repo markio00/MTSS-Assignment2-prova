@@ -256,7 +256,7 @@ public class ConcreteBillTest {
             
             price = bill.getOrderPrice(list, user, time);
             assertEquals(150, price, 0);
-
+            
             this.list.add(new EItem(ItemType.Keyboard, "article2", 100.00));
             
             price = bill.getOrderPrice(list, user, time);
@@ -267,7 +267,7 @@ public class ConcreteBillTest {
             fail("Carrello superiore a 30 elementi");
         }   
     }
-
+    
     @Test
     public void testLottery() {
         try {
@@ -282,11 +282,13 @@ public class ConcreteBillTest {
             
             this.list.add(new EItem(ItemType.Mouse, "article1", 100.00));
             
+            //TEST LOTTERIA 
             for(int i = 0; i < 100; ++i){
                 price = Math.min(bill.getOrderPrice(list, user, time), price);
             }
             assertEquals(0, price, 0);
-
+            
+            //TEST LISTA PIENA
             price = Double.MAX_VALUE;
             while(ConcreteBill.luckyUsers.size() < 10){
                 ConcreteBill.luckyUsers.add(new User("user2", "Mario", "Rossi", LocalDate.of(2000, 04, 19)));
@@ -296,6 +298,7 @@ public class ConcreteBillTest {
             }
             assertEquals(100, price, 0);
             
+            //TEST MAGGIORENNE
             this.user = new User("user2", "Mario", "Rossi", LocalDate.of(2000, 04, 19));
             price = Double.MAX_VALUE;
             for(int i = 0; i < 30; ++i){
@@ -303,6 +306,7 @@ public class ConcreteBillTest {
             }
             assertEquals(100, price, 0);
             
+            //TEST PRIMA DELLE 18
             time = LocalTime.of(16, 15, 0);
             price = Double.MAX_VALUE;
             ConcreteBill.luckyUsers.clear();
@@ -311,6 +315,7 @@ public class ConcreteBillTest {
             }
             assertEquals(100, price, 0);
             
+            //TEST OLTRE LE 19
             time = LocalTime.of(23, 15, 0);
             price = Double.MAX_VALUE;
             ConcreteBill.luckyUsers.clear();
@@ -318,7 +323,7 @@ public class ConcreteBillTest {
                 price = Math.min(bill.getOrderPrice(list, user, time), price);
             }
             assertEquals(100, price, 0);
-            
+
         } catch (BillException e) {
             e.printStackTrace();
             fail("Carrello superiore a 30 elementi");
