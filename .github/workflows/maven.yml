@@ -23,17 +23,13 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
       
-    - name: Test(JaCoCo)
+    - name: Code coverage test with JaCoCo
       run: mvn test jacoco:report
     
-    - name: Codecov push
-      uses: codecov/codecov-action@v3
-
-    - name: Coveralls (mvn)
+    - name: Coveralls push (mvn)
       run: mvn coveralls:report --define repoToken=${{ secrets.COVERALLS_SECRET }}
  
-    - name: Coveralls (GH Actions)
-      uses:  coverallsapp/github-action@master
+    - name: Codecov push (action)
+      uses: codecov/codecov-action@v3
       with:
           fail_ci_if_error: true
-          github-token: ${{ secrets.COVERALLS_SECRET }}
