@@ -32,8 +32,8 @@ public class ConcreteBill implements Bill{
             return 0;
         }
         
-        final double total = getTotalPrice(itemsOrdered);
-        
+        double total = getTotalPrice(itemsOrdered);
+
         return total - 
         getDiscount5Processors(itemsOrdered) - 
         getDiscount10Mouse(itemsOrdered) -
@@ -126,7 +126,7 @@ public class ConcreteBill implements Bill{
     
     private double getDiscountSameMouseKeyboards
     (final List<EItem> itemsOrdered) {
-        
+        boolean trovato = false;
         int matchFound = 0;
         double minPrice = Double.MAX_VALUE;
         
@@ -134,14 +134,16 @@ public class ConcreteBill implements Bill{
             if(item.getItemType() == ItemType.Mouse){
                 minPrice = Math.min(minPrice, item.getPrice());
                 ++matchFound;
+                trovato = true;
             }
             if(item.getItemType() == ItemType.Keyboard){
                 minPrice = Math.min(minPrice, item.getPrice());
                 --matchFound;
+                trovato = true;
             }
         }
         
-        if(matchFound == 0 && !itemsOrdered.isEmpty()){
+        if(matchFound == 0 && trovato){
             return minPrice/2;
         }
         
