@@ -35,7 +35,7 @@ jobs:
       run: mvn coveralls:report --define repoToken=${{ secrets.COVERALLS_SECRET }}
  
     - name: Coveralls (GH Actions)
-      uses: codecov/codecov-action@v3
+      uses:  coverallsapp/github-action@master
       with:
           fail_ci_if_error: true
-          secret: ${{ secrets.COVERALLS_SECRET }}
+          github-token: ${{ secrets.COVERALLS_SECRET }}
