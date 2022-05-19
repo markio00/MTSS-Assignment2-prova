@@ -28,8 +28,6 @@ jobs:
     
     - name: Codecov push
       uses: codecov/codecov-action@v3
-      with:
-          fail_ci_if_error: true
 
     - name: Coveralls (mvn)
       run: mvn coveralls:report --define repoToken=${{ secrets.COVERALLS_SECRET }}
