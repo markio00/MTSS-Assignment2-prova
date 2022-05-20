@@ -234,7 +234,6 @@ public class ConcreteBillTest {
             fail("Mode than 30 items are not allowed for one order");
             
         } catch(BillException ex) {
-            ex.printStackTrace();
             assertTrue(true);
         }
     }
@@ -297,6 +296,7 @@ public class ConcreteBillTest {
             //TEST MAGGIORENNE
             this.user = new User("user2", "Mario", "Rossi", LocalDate.of(2000, 04, 19));
             price = Double.MAX_VALUE;
+            ConcreteBill.luckyUsers.clear();
             for(int i = 0; i < 30; ++i){
                 price = Math.min(bill.getOrderPrice(list, user, time), price);
             }
