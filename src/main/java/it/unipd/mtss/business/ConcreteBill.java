@@ -49,7 +49,8 @@ public class ConcreteBill implements Bill{
         
         if(time >= 1800 && time <= 1900){
             
-            if(!luckyUsers.contains(user) && presents > luckyUsers.size() &&
+            if(!luckyUsers.contains(user) &&
+            presents > luckyUsers.size() &&
             user.getBirthDate().compareTo(LocalDate.now().minusYears(18)) > 0){
                 
                 final Random rand = new Random();
