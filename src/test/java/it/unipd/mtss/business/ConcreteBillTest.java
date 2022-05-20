@@ -287,7 +287,9 @@ public class ConcreteBillTest {
             price = Double.MAX_VALUE;
             while(ConcreteBill.luckyUsers.size() < 10){
                 ConcreteBill.luckyUsers.add(new User("user2", "Mario", "Rossi", LocalDate.of(2000, 04, 19)));
-            }         
+            }
+            this.user = new User("user2ì3", "Marioz", "Rosso", LocalDate.of(2020, 04, 19));
+            
             for(int i = 0; i < 100; ++i){
                 price = Math.min(bill.getOrderPrice(list, user, time), price);
             }
