@@ -303,6 +303,7 @@ public class ConcreteBillTest {
             assertEquals(100, price, 0);
             
             //TEST PRIMA DELLE 18
+            this.user = new User("user2", "Mario", "Rossi", LocalDate.of(2020, 04, 19));
             time = LocalTime.of(16, 15, 0);
             price = Double.MAX_VALUE;
             ConcreteBill.luckyUsers.clear();
@@ -312,9 +313,21 @@ public class ConcreteBillTest {
             assertEquals(100, price, 0);
             
             //TEST OLTRE LE 19
+            this.user = new User("user2", "Mario", "Rossi", LocalDate.of(2020, 04, 19));
             time = LocalTime.of(23, 15, 0);
             price = Double.MAX_VALUE;
             ConcreteBill.luckyUsers.clear();
+            for(int i = 0; i < 30; ++i){
+                price = Math.min(bill.getOrderPrice(list, user, time), price);
+            }
+            assertEquals(100, price, 0);
+
+            //TEST GIA' COUNTENUTO
+            this.user = new User("user2", "Mario", "Rossi", LocalDate.of(2020, 04, 19));
+            time = LocalTime.of(18, 15, 0);
+            price = Double.MAX_VALUE;
+            ConcreteBill.luckyUsers.clear();
+            ConcreteBill.luckyUsers.add(user);
             for(int i = 0; i < 30; ++i){
                 price = Math.min(bill.getOrderPrice(list, user, time), price);
             }
